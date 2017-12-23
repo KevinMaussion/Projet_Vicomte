@@ -34,3 +34,8 @@ class ListeRegle(list):
     def __iter__(self):
         for e in self._get_liste_regle():
             yield e
+
+#Le résultat attendu n'est pas le bon. Tout les éléments ne sont pas affichés.
+    def __str__(self):
+        for regle in self._get_liste_regle():
+            return str(print(regle))
