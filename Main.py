@@ -1,16 +1,15 @@
-from Modele.Regle import *
 from Modele.ListeRegle import *
+from Modele.Regle import *
 from Modele.Renommage import *
 
-od = OrderedDict()
+extension_list = [".docx", ".txt"]
+test = []
 path_to_save_file = r"C:\Users\Wizkalista\Desktop\NOMLOGICIEL.ini"
-path_to_folder = r"C:\Users\Wizkalista\Desktop\test"
+path_to_folder = os.path.abspath(r"C:\Users\Wizkalista\Desktop\test")
 
 regle = Regle()
 
-
-
-regle.regle("amorce", "a partir de", "prefixe", True, "postfixe", od)
+regle.regle("amorce", "a partir de", "prefixe_", True, "_postfixe", test)
 
 
 rename = Renommage(path_to_folder,  regle)
