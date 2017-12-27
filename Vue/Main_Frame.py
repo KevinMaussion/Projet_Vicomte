@@ -3,7 +3,7 @@ from tkinter import *
 
 class Interface(Frame):
     def __init__(self, fenetre=None, **kwargs):
-        Frame.__init__(self, fenetre, width=768, height=580, **kwargs)
+        Frame.__init__(self, fenetre, width=3000, height=700, **kwargs)
 
         # Creation de la barre de menu
         self.barremenu = Menu(fenetre)
@@ -13,20 +13,20 @@ class Interface(Frame):
         self.barremenu.add_cascade(label="Règles", underline=0, menu=self.regles)
         self.regles.add_command(label="Lister les règles", underline=0, command=self.lister)
         self.regles.add_command(label="Créer une règle", underline=0, command=self.creer)
+        self.regles.add_separator()
         self.regles.add_command(label="Quitter", underline=0, command=self.quitter)
 
         # Creation du menu "?"
-        self.aide = Menu(self.barremenu, tearoff=0)
-        self.barremenu.add_cascade(label="?", underline=0, menu=self.aide)
+        self.barremenu.add_command(label="?", underline=0, command=self.software_information)
 
         # Afficher le menu
         fenetre.config(menu=self.barremenu)
 
         # Définition des frames
-        frametop = Frame(fenetre, width=768, height=290)
+        frametop = Frame(fenetre, width=1000, height=350)
         frametop.pack(side=TOP)
 
-        framebot = Frame(fenetre, width=768, height=290)
+        framebot = Frame(fenetre, width=1000, height=350)
         framebot.pack(side=BOTTOM)
 
         ###############Frame du haut###################################
@@ -57,46 +57,57 @@ class Interface(Frame):
 
         Label(framebot, text="A partir de").grid(row=5, column=1)
         Apartir = Entry(framebot, width=5).grid(row=6, column=1)
-        Label(framebot, text="").grid(row=7, column=1)
-        Label(framebot, text="").grid(row=7, column=6)
+
 
         # Prefixe
         Label(framebot, text="Préfixe").grid(row=1, column=2)
         prepost = StringVar()
-        choix_pre = Radiobutton(framebot, variable=prepost, value="pre")
+        choix_pre = Entry(framebot, width=5)
         choix_pre.grid(row=2, column=2)
 
         # Nom du fichier
         Label(framebot, text="Nom du fichier", borderwidth=8).grid(row=1, column=4)
         choix_nom_fi = StringVar()
+
         choix_nomorig = Radiobutton(framebot, variable=choix_nom_fi, value="original")
-        Label(framebot, text="Nom original").grid(row=2, column=4)
+        Label(framebot, text="Conserver le nom originel").grid(row=2, column=4)
+
+        choix_aucun_nom = Radiobutton(framebot, variable=choix_nom_fi, value="vide")
+        Label(framebot, text="Ne pas conserver le nom originel").grid(row=3, column=4)
+
+        l = LabelFrame(framebot, text="Changer le nom originel", padx=5, pady=5)
+        l.grid(row=4, column=4)
         choix_nomsaisi = Radiobutton(framebot, variable=choix_nom_fi, value="saisi")
-        nom_saisi = Entry(framebot, width=11).grid(row=3, column=4)
+        w = Entry(l, text="test", width=11)
+        w.pack()
+
         choix_nomorig.grid(row=2, column=3)
-        choix_nomsaisi.grid(row=3, column=3)
+        choix_aucun_nom.grid(row=3, column=3)
+        choix_nomsaisi.grid(row=4, column=3)
         """fin nom du fichier"""
 
         # Postixe
         Label(framebot, text="Postfixe", borderwidth=8).grid(row=1, column=5)
-        choix_post = Radiobutton(framebot, variable=prepost, value="post")
+        choix_post = Entry(framebot, width=5)
         choix_post.grid(row=2, column=5)
 
+        # Extension
         Label(framebot, text="Extension concernée").grid(row=1, column=6)
+        choix_ext = Entry(framebot, width=5)
+        choix_ext.grid(row=2, column=6)
 
         Button(framebot, text='Renommer', width=10).grid(row=6, column=6)
 
-        Button(framebot, text='Retour', width=10, command=fenetre.destroy).grid(row=8, column=6)
 
     def creer(self):
-        root = Tk()
+        root = Toplevel()
         root.title("Créer une règle")
 
         # Définition des frames
-        frametop = Frame(root, width=768, height=290)
+        frametop = Frame(root, width=1000, height=350)
         frametop.pack(side=TOP)
 
-        framebot = Frame(root, width=768, height=290)
+        framebot = Frame(root, width=1000, height=350)
         framebot.pack(side=BOTTOM)
 
         ###############Frame du haut###################################
@@ -107,10 +118,10 @@ class Interface(Frame):
         Label(frametop, text="").grid(row=6, column=5)
 
         # Photo
-        # photo = PhotoImage(file="vicomte.gif")
-        # label1 = Label(frametop, image=photo)
-        # label1.image = photo
-        # label1.grid(row=5, column=5, columnspan=2, sticky=NW)
+        photo2 = PhotoImage(file="vicomte2.gif")
+        label1 = Label(frametop, image=photo2)
+        label1.image = photo2
+        label1.grid(row=5, column=5, columnspan=2, sticky=NW)
 
         ###############Frame du bas###################################
 
@@ -127,41 +138,65 @@ class Interface(Frame):
 
         Label(framebot, text="A partir de").grid(row=5, column=1)
         Apartir = Entry(framebot, width=5).grid(row=6, column=1)
-        Label(framebot, text="").grid(row=7, column=1)
-        Label(framebot, text="").grid(row=7, column=6)
 
         # Prefixe
         Label(framebot, text="Préfixe").grid(row=1, column=2)
         prepost = StringVar()
-        choix_pre = Radiobutton(framebot, variable=prepost, value="pre")
+        choix_pre = Entry(framebot, width=5)
         choix_pre.grid(row=2, column=2)
 
         # Nom du fichier
         Label(framebot, text="Nom du fichier", borderwidth=8).grid(row=1, column=4)
         choix_nom_fi = StringVar()
+
         choix_nomorig = Radiobutton(framebot, variable=choix_nom_fi, value="original")
-        Label(framebot, text="Nom original").grid(row=2, column=4)
+        Label(framebot, text="Conserver le nom originel").grid(row=2, column=4)
+
+        choix_aucun_nom = Radiobutton(framebot, variable=choix_nom_fi, value="vide")
+        Label(framebot, text="Ne pas conserver le nom originel").grid(row=3, column=4)
+
+        l = LabelFrame(framebot, text="Changer le nom originel", padx=5, pady=5)
+        l.grid(row=4, column=4)
         choix_nomsaisi = Radiobutton(framebot, variable=choix_nom_fi, value="saisi")
-        nom_saisi = Entry(framebot, width=11).grid(row=3, column=4)
+        w = Entry(l, text="test", width=11)
+        w.pack()
+
         choix_nomorig.grid(row=2, column=3)
-        choix_nomsaisi.grid(row=3, column=3)
+        choix_aucun_nom.grid(row=3, column=3)
+        choix_nomsaisi.grid(row=4, column=3)
         """fin nom du fichier"""
 
         # Postixe
         Label(framebot, text="Postfixe", borderwidth=8).grid(row=1, column=5)
-        choix_post = Radiobutton(framebot, variable=prepost, value="post")
+        choix_post = Entry(framebot, width=5)
         choix_post.grid(row=2, column=5)
 
+        # Extension
         Label(framebot, text="Extension concernée").grid(row=1, column=6)
+        choix_ext = Entry(framebot, width=5)
+        choix_ext.grid(row=2, column=6)
 
-        Button(framebot, text='Renommer', width=10).grid(row=6, column=6)
-
-        Button(framebot, text='Retour', width=10, command=root.destroy).grid(row=8, column=6)
+        Button(framebot, text='Créer règle', width=10).grid(row=6, column=6)
         root.mainloop()
 
     def lister(self):
         # fenetreLister.geometry("%dx%d%+d%+d" % (100, 400, 250, 200))
         pass
+
+    def software_information(self):
+        root = Toplevel(width="500", height="500")
+        root.title("Information Logiciel")
+
+        labell = Label(root, text="Auteur du logiciel :")
+        label2 = Label(root, text="Vicomte Sebban")
+        label3 = Label(root, text="Version du logiciel :")
+        label4 = Label(root, text="1.0")
+        labell.grid(row=1, column=1)
+        label2.grid(row=1, column=2)
+        label3.grid(row=2, column=1)
+        label4.grid(row=2, column=2)
+
+        root.mainloop()
 
     def quitter(self):
         self.master.destroy()
