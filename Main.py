@@ -35,6 +35,5 @@ from Vue.Main_Frame import *
 # print(chr(97))
 
 fenetre = Tk()
-fenetre.title("Projet Vicomte")
 interface = Interface(fenetre)
 interface.mainloop()

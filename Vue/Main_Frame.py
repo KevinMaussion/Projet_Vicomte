@@ -3,7 +3,10 @@ from tkinter import *
 
 class Interface(Frame):
     def __init__(self, fenetre=None, **kwargs):
-        Frame.__init__(self, fenetre, width=3000, height=700, **kwargs)
+        Frame.__init__(self, fenetre, **kwargs)
+
+        self.master.title("Projet Vicomte")
+        self.master.geometry('550x350')
 
         # Creation de la barre de menu
         self.barremenu = Menu(fenetre)
@@ -23,10 +26,10 @@ class Interface(Frame):
         fenetre.config(menu=self.barremenu)
 
         # Définition des frames
-        frametop = Frame(fenetre, width=1000, height=350)
+        frametop = Frame(fenetre)
         frametop.pack(side=TOP)
 
-        framebot = Frame(fenetre, width=1000, height=350)
+        framebot = Frame(fenetre)
         framebot.pack(side=BOTTOM)
 
         ###############Frame du haut###################################
@@ -40,7 +43,7 @@ class Interface(Frame):
         photo = PhotoImage(file="vicomte.gif")
         label1 = Label(frametop, image=photo)
         label1.image = photo
-        label1.grid(row=5, column=5, columnspan=2, sticky=NW)
+        label1.grid(row=3, column=10, sticky=W)
 
         ###############Frame du bas###################################
 
@@ -104,10 +107,10 @@ class Interface(Frame):
         root.title("Créer une règle")
 
         # Définition des frames
-        frametop = Frame(root, width=1000, height=350)
+        frametop = Frame(root)
         frametop.pack(side=TOP)
 
-        framebot = Frame(root, width=1000, height=350)
+        framebot = Frame(root)
         framebot.pack(side=BOTTOM)
 
         ###############Frame du haut###################################
@@ -118,10 +121,10 @@ class Interface(Frame):
         Label(frametop, text="").grid(row=6, column=5)
 
         # Photo
-        photo2 = PhotoImage(file="vicomte2.gif")
-        label1 = Label(frametop, image=photo2)
-        label1.image = photo2
-        label1.grid(row=5, column=5, columnspan=2, sticky=NW)
+        photo = PhotoImage(file="vicomte.gif")
+        label1 = Label(frametop, image=photo)
+        label1.image = photo
+        label1.grid(row=3, column=10, sticky=W)
 
         ###############Frame du bas###################################
 
