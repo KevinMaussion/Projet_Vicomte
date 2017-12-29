@@ -1,6 +1,3 @@
-from collections import OrderedDict
-
-
 class Regle(object):
 
     def __init__(self):
@@ -9,7 +6,7 @@ class Regle(object):
         self._prefixe = ""
         self._nomfichier = False
         self._postfixe = ""
-        self._extension = OrderedDict()
+        self._extension = []
 
     def regle(self, amorce, apartirde, prefixe, nomfichier, postfixe, extension):
         self._amorce = amorce

@@ -3,7 +3,7 @@ from Vue.Main_Frame import *
 # extension_list = [".docx", ".txt"]
 # test = []
 # path_to_save_file = r"C:\Users\Wizkalista\Desktop\NOMLOGICIEL.ini"
-# path_to_folder = os.path.abspath(r"C:\Users\Wizkalista\Desktop\test")
+# path_to_folder = r"C:\Users\Wizkalista\Desktop\test"
 #
 # regle = Regle()
 #
