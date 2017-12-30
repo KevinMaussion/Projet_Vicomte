@@ -1,5 +1,8 @@
 from tkinter import *
 
+from Modele.ListeRegle import ListeRegle
+from Modele.Regle import Regle
+
 
 class Creer_Regle_Frame(Frame):
     def __init__(self, fenetre=None, **kwargs):
@@ -16,20 +19,15 @@ class Creer_Regle_Frame(Frame):
         framebot.pack(side=BOTTOM)
 
         ###############Frame du haut###################################
-        Label(frametop, text="Nom du répertoire").grid(row=3, column=2)
-        Label(frametop, text="Renommer en lots").grid(row=2, column=3)
-        self.var = StringVar()
-        self.nomdurep = Entry(frametop, textvariable=self.var)
-        self.var.set(r'C:\Users\Wizkalista\Desktop\test')
-        self.nomdurep.grid(row=3, column=3)
-        Label(frametop, text="").grid(row=3, column=5)
-        Label(frametop, text="").grid(row=6, column=5)
+        label = Label(frametop, text="Création d'une règle.")
+        label.pack()
+
 
         # Photo
         photo = PhotoImage(file="vicomte.gif")
         label1 = Label(frametop, image=photo)
         label1.image = photo
-        label1.grid(row=3, column=10, sticky=W)
+        label1.pack()
 
         ###############Frame du bas###################################
 
@@ -87,30 +85,27 @@ class Creer_Regle_Frame(Frame):
         self.choix_ext = Entry(framebot, width=5)
         self.choix_ext.grid(row=2, column=6)
 
-        rename_button = Button(framebot, text='Renommer', width=10, command=self.renommage)
+        rename_button = Button(framebot, text='Créer règle', width=10, command=self.creer_regle)
         rename_button.grid(row=6, column=6)
 
     def lister(self):
         # fenetreLister.geometry("%dx%d%+d%+d" % (100, 400, 250, 200))
         pass
 
-    def software_information(self):
-        root = Toplevel(width="500", height="500")
-        root.title("Information Logiciel")
-
-        labell = Label(root, text="Auteur du logiciel :")
-        label2 = Label(root, text="Vicomte Sebban")
-        label3 = Label(root, text="Version du logiciel :")
-        label4 = Label(root, text="1.0")
-        labell.grid(row=1, column=1)
-        label2.grid(row=1, column=2)
-        label3.grid(row=2, column=1)
-        label4.grid(row=2, column=2)
-
-        root.mainloop()
 
     def quitter(self):
         self.master.destroy()
+
+    def set_apartirde(self, txt):
+        try:
+            if txt:
+                value = int(txt)
+                return value
+            else:
+                return txt
+
+        except ValueError:
+            return txt
 
     def set_amorce(self):
         choix_amorce = self.var_choix.get()
@@ -145,19 +140,29 @@ class Creer_Regle_Frame(Frame):
     def set_extension(self):
         extension = self.choix_ext.get()
         extension_list = extension.split(',')
+        if extension_list == ['']:
+            extension_list = []
         return extension_list
 
-    # def renommage(self):
-    #     directory_path = os.path.abspath(self.nomdurep.get())
-    #
-    #     regle = Regle()
-    #     regle.prefixe = self.choix_pre.get()
-    #     regle.postfixe = self.choix_post.get()
-    #     regle.amorce = self.set_amorce()
-    #     regle.nomfichier = self.set_nom_fichier()
-    #     regle.extension = self.set_extension()
-    #
-    #     print("test: " + directory_path)
-    #
-    #     rename = Renommage(directory_path, regle)
-    #     rename.renommer()
+    def creer_regle(self):
+        regle = Regle()
+        regle.prefixe = self.choix_pre.get()
+        regle.postfixe = self.choix_post.get()
+        regle.amorce = self.set_amorce()
+        regle.nomfichier = self.set_nom_fichier()
+        regle.extension = self.set_extension()
+        regle.apartirde = self.set_apartirde(self.a_partir.get())
+
+        print(regle)
+
+        liste_regle = ListeRegle()
+        liste_regle.charger_liste_regle('NOMLOGICIEL.ini')
+
+        for r in liste_regle:
+            print('Element de la liste chargée: ' + r)
+
+        liste_regle.append(regle)
+
+        for r in liste_regle:
+            print('Element de la liste à sauvegarder: ' + r)
+        liste_regle.sauvegarder_liste_regle('NOMLOGICIEL.ini')
