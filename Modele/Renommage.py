@@ -12,6 +12,12 @@ class Renommage(Action):
         list_of_file = os.listdir(self._get_path_to_folder())
         os.chdir(self._get_path_to_folder())
         amorce = self._get_regle()._get_amorce()
+        apartide = self._get_regle()._get_apartirde()
+
+        # bloc concernant à partir de:
+        if apartide:
+            amorce = apartide
+
         # Bloc concernant la variable _extension dans la règle.
         for file in list_of_file:
             file_no_extension, file_extension = os.path.splitext(file)
@@ -45,16 +51,11 @@ class Renommage(Action):
                         if self._get_regle()._get_postfixe() != "":
                             new_filename = new_filename.replace(".", self._get_regle()._get_postfixe() + ".")
 
-                        print(self._get_regle()._get_amorce())
-                        print(isinstance(self._get_regle()._get_amorce(), int))
-
                         # Bloc concernant la variable _amorce dans la règle.
                         if amorce == "":
-                            print("amorce = " + str(amorce))
                             pass
                         elif isinstance(amorce, str):
                             list_ascii = [ord(c) for c in amorce]
-                            print(list_ascii)
                             if list_ascii[-1] < 122:
                                 new_filename = amorce + new_filename
                                 list_ascii[-1] = list_ascii[-1] + 1
@@ -98,11 +99,9 @@ class Renommage(Action):
 
                 # Bloc concernant la variable _amorce dans la règle.
                 if amorce == "":
-                    print("amorce = " + str(amorce))
                     pass
                 elif isinstance(amorce, str):
                     list_ascii = [ord(c) for c in amorce]
-                    print(list_ascii)
                     if list_ascii[-1] < 122:
                         new_filename = amorce + new_filename
                         list_ascii[-1] = list_ascii[-1] + 1

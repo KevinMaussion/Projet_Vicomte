@@ -1,33 +1,12 @@
 from tkinter import *
 
-from Modele.Regle import *
-from Modele.Renommage import *
-from Vue.Creer_Regle_Frame import Creer_Regle_Frame
 
-
-class Main_Frame(Frame):
+class Creer_Regle_Frame(Frame):
     def __init__(self, fenetre=None, **kwargs):
         Frame.__init__(self, fenetre, **kwargs)
 
         self.master.title("Projet Vicomte")
         self.master.geometry('550x350')
-
-        # Creation de la barre de menu
-        self.barremenu = Menu(fenetre)
-
-        # Creation du menu "Règles"
-        self.regles = Menu(self.barremenu, tearoff=0)
-        self.barremenu.add_cascade(label="Règles", underline=0, menu=self.regles)
-        self.regles.add_command(label="Lister les règles", underline=0, command=self.lister)
-        self.regles.add_command(label="Créer une règle", underline=0, command=self.creer)
-        self.regles.add_separator()
-        self.regles.add_command(label="Quitter", underline=0, command=self.quitter)
-
-        # Creation du menu "?"
-        self.barremenu.add_command(label="?", underline=0, command=self.software_information)
-
-        # Afficher le menu
-        fenetre.config(menu=self.barremenu)
 
         # Définition des frames
         frametop = Frame(fenetre)
@@ -66,11 +45,9 @@ class Main_Frame(Frame):
         choix_chiffre.grid(row=4, column=1)
         choix_aucune.select()
 
-
         Label(framebot, text="A partir de").grid(row=5, column=1)
         self.a_partir = Entry(framebot, width=5)
         self.a_partir.grid(row=6, column=1)
-
 
         # Prefixe
         Label(framebot, text="Préfixe").grid(row=1, column=2)
@@ -113,14 +90,6 @@ class Main_Frame(Frame):
         rename_button = Button(framebot, text='Renommer', width=10, command=self.renommage)
         rename_button.grid(row=6, column=6)
 
-
-    def creer(self):
-        root = Toplevel()
-        root.title("Créer une règle")
-        interface = Creer_Regle_Frame(root)
-        interface.mainloop()
-
-
     def lister(self):
         # fenetreLister.geometry("%dx%d%+d%+d" % (100, 400, 250, 200))
         pass
@@ -142,17 +111,6 @@ class Main_Frame(Frame):
 
     def quitter(self):
         self.master.destroy()
-
-    def set_apartirde(self, txt):
-        try:
-            if txt:
-                value = int(txt)
-                return value
-            else:
-                return txt
-
-        except ValueError:  # not an integer
-            return txt
 
     def set_amorce(self):
         choix_amorce = self.var_choix.get()
@@ -187,23 +145,19 @@ class Main_Frame(Frame):
     def set_extension(self):
         extension = self.choix_ext.get()
         extension_list = extension.split(',')
-        if extension_list == ['']:
-            extension_list = []
-        print(extension_list)
         return extension_list
 
-    def renommage(self):
-        directory_path = os.path.abspath(self.nomdurep.get())
-
-        regle = Regle()
-        regle.prefixe = self.choix_pre.get()
-        regle.postfixe = self.choix_post.get()
-        regle.amorce = self.set_amorce()
-        regle.nomfichier = self.set_nom_fichier()
-        regle.extension = self.set_extension()
-        regle.apartirde = self.set_apartirde(self.a_partir.get())
-
-        print("test: " + directory_path)
-        print(regle)
-        rename = Renommage(directory_path, regle)
-        rename.renommer()
+    # def renommage(self):
+    #     directory_path = os.path.abspath(self.nomdurep.get())
+    #
+    #     regle = Regle()
+    #     regle.prefixe = self.choix_pre.get()
+    #     regle.postfixe = self.choix_post.get()
+    #     regle.amorce = self.set_amorce()
+    #     regle.nomfichier = self.set_nom_fichier()
+    #     regle.extension = self.set_extension()
+    #
+    #     print("test: " + directory_path)
+    #
+    #     rename = Renommage(directory_path, regle)
+    #     rename.renommer()
