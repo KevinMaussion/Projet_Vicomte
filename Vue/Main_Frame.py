@@ -1,3 +1,4 @@
+import tkinter.filedialog
 from tkinter import *
 
 from Modele.Regle import *
@@ -30,67 +31,66 @@ class Main_Frame(Frame):
         fenetre.config(menu=self.barremenu)
 
         # Définition des frames
-        frametop = Frame(fenetre)
-        frametop.pack(side=TOP)
+        self.frametop = Frame(fenetre)
+        self.frametop.pack(side=TOP)
 
-        framebot = Frame(fenetre)
-        framebot.pack(side=BOTTOM)
+        self.framebot = Frame(fenetre)
+        self.framebot.pack(side=BOTTOM)
 
         ###############Frame du haut###################################
-        Label(frametop, text="Nom du répertoire").grid(row=3, column=2)
-        Label(frametop, text="Renommer en lots").grid(row=2, column=3)
+        Label(self.frametop, text="Nom du répertoire").grid(row=3, column=2)
+        Label(self.frametop, text="Renommer en lots").grid(row=2, column=3)
         self.var = StringVar()
-        self.nomdurep = Entry(frametop, textvariable=self.var)
-        self.var.set(r'C:\Users\Wizkalista\Desktop\test')
-        self.nomdurep.grid(row=3, column=3)
-        Label(frametop, text="").grid(row=3, column=5)
-        Label(frametop, text="").grid(row=6, column=5)
+        button_dir_path = Button(self.frametop, text='Cliquez pour choisir un dossier', command=self.get_folder_path)
+        button_dir_path.grid(row=3, column=2)
+
+        Label(self.frametop, text="").grid(row=3, column=5)
+        Label(self.frametop, text="").grid(row=6, column=5)
 
         # Photo
         photo = PhotoImage(file="vicomte.gif")
-        label1 = Label(frametop, image=photo)
+        label1 = Label(self.frametop, image=photo)
         label1.image = photo
         label1.grid(row=3, column=10, sticky=W)
 
         ###############Frame du bas###################################
 
         # Amorce
-        Label(framebot, text="Amorce").grid(row=1, column=1)
+        Label(self.framebot, text="Amorce").grid(row=1, column=1)
         self.var_choix = StringVar(master=fenetre)
 
-        choix_aucune = Radiobutton(framebot, text="Aucune", variable=self.var_choix, value="Aucune")
-        choix_lettre = Radiobutton(framebot, text=" Lettre   ", variable=self.var_choix, value="Lettre")
-        choix_chiffre = Radiobutton(framebot, text="Chiffre  ", variable=self.var_choix, value="Chiffre")
+        choix_aucune = Radiobutton(self.framebot, text="Aucune", variable=self.var_choix, value="Aucune")
+        choix_lettre = Radiobutton(self.framebot, text=" Lettre   ", variable=self.var_choix, value="Lettre")
+        choix_chiffre = Radiobutton(self.framebot, text="Chiffre  ", variable=self.var_choix, value="Chiffre")
         choix_aucune.grid(row=2, column=1)
         choix_lettre.grid(row=3, column=1)
         choix_chiffre.grid(row=4, column=1)
         choix_aucune.select()
 
-
-        Label(framebot, text="A partir de").grid(row=5, column=1)
-        self.a_partir = Entry(framebot, width=5)
+        Label(self.framebot, text="A partir de").grid(row=5, column=1)
+        self.a_partir = Entry(self.framebot, width=5)
         self.a_partir.grid(row=6, column=1)
 
 
         # Prefixe
-        Label(framebot, text="Préfixe").grid(row=1, column=2)
+        Label(self.framebot, text="Préfixe").grid(row=1, column=2)
         # prepost = StringVar()
-        self.choix_pre = Entry(framebot, width=5)
+        self.choix_pre = Entry(self.framebot, width=5)
         self.choix_pre.grid(row=2, column=2)
 
         # Nom du fichier
-        Label(framebot, text="Nom du fichier", borderwidth=8).grid(row=1, column=4)
+        Label(self.framebot, text="Nom du fichier", borderwidth=8).grid(row=1, column=4)
         self.choix_nom_fi = StringVar()
 
-        self.choix_nomorig = Radiobutton(framebot, variable=self.choix_nom_fi, value="original")
-        Label(framebot, text="Conserver le nom originel").grid(row=2, column=4)
+        self.choix_nomorig = Radiobutton(self.framebot, variable=self.choix_nom_fi, value="original")
+        Label(self.framebot, text="Conserver le nom originel").grid(row=2, column=4)
 
-        self.choix_aucun_nom = Radiobutton(framebot, variable=self.choix_nom_fi, value="vide")
-        Label(framebot, text="Ne pas conserver le nom originel").grid(row=3, column=4)
+        self.choix_aucun_nom = Radiobutton(self.framebot, variable=self.choix_nom_fi, value="vide")
+        Label(self.framebot, text="Ne pas conserver le nom originel").grid(row=3, column=4)
 
-        l = LabelFrame(framebot, text="Changer le nom originel", padx=5, pady=5)
+        l = LabelFrame(self.framebot, text="Changer le nom originel", padx=5, pady=5)
         l.grid(row=4, column=4)
-        self.choix_nomsaisi = Radiobutton(framebot, variable=self.choix_nom_fi, value="saisi")
+        self.choix_nomsaisi = Radiobutton(self.framebot, variable=self.choix_nom_fi, value="saisi")
         self.w = Entry(l, text="test", width=11)
         self.w.pack()
 
@@ -101,16 +101,16 @@ class Main_Frame(Frame):
         """fin nom du fichier"""
 
         # Postixe
-        Label(framebot, text="Postfixe", borderwidth=8).grid(row=1, column=5)
-        self.choix_post = Entry(framebot, width=5)
+        Label(self.framebot, text="Postfixe", borderwidth=8).grid(row=1, column=5)
+        self.choix_post = Entry(self.framebot, width=5)
         self.choix_post.grid(row=2, column=5)
 
         # Extension
-        Label(framebot, text="Extension concernée").grid(row=1, column=6)
-        self.choix_ext = Entry(framebot, width=5)
+        Label(self.framebot, text="Extension concernée").grid(row=1, column=6)
+        self.choix_ext = Entry(self.framebot, width=5)
         self.choix_ext.grid(row=2, column=6)
 
-        rename_button = Button(framebot, text='Renommer', width=10, command=self.renommage)
+        rename_button = Button(self.framebot, text='Renommer', width=10, command=self.renommage)
         rename_button.grid(row=6, column=6)
 
 
@@ -142,6 +142,12 @@ class Main_Frame(Frame):
 
     def quitter(self):
         self.master.destroy()
+
+    def get_folder_path(self):
+        self.var.set(tkinter.filedialog.askdirectory())
+        print(self.var.get())
+        self.nomdurep = Label(self.frametop, text=self.var.get())
+        self.nomdurep.grid(row=3, column=3)
 
     def set_apartirde(self, txt):
         try:
@@ -193,7 +199,7 @@ class Main_Frame(Frame):
         return extension_list
 
     def renommage(self):
-        directory_path = os.path.abspath(self.nomdurep.get())
+        directory_path = os.path.abspath(self.var.get())
 
         regle = Regle()
         regle.prefixe = self.choix_pre.get()
@@ -202,8 +208,5 @@ class Main_Frame(Frame):
         regle.nomfichier = self.set_nom_fichier()
         regle.extension = self.set_extension()
         regle.apartirde = self.set_apartirde(self.a_partir.get())
-
-        print("test: " + directory_path)
-        print(regle)
         rename = Renommage(directory_path, regle)
         rename.renommer()
