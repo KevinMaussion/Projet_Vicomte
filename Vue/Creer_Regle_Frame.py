@@ -1,3 +1,4 @@
+import tkinter.filedialog
 from tkinter import *
 
 from Modele.ListeRegle import ListeRegle
@@ -9,25 +10,29 @@ class Creer_Regle_Frame(Frame):
         Frame.__init__(self, fenetre, **kwargs)
 
         self.master.title("Projet Vicomte")
-        self.master.geometry('550x350')
+        self.master.geometry('750x350')
 
         # Définition des frames
-        frametop = Frame(fenetre)
-        frametop.pack(side=TOP)
+        self.frametop = Frame(fenetre)
+        self.frametop.pack(side=TOP)
 
         framebot = Frame(fenetre)
         framebot.pack(side=BOTTOM)
 
         ###############Frame du haut###################################
-        label = Label(frametop, text="Création d'une règle.")
-        label.pack()
+
+        Label(self.frametop, text="Nom du fichier de sauvegarde").grid(row=3, column=2)
+        Label(self.frametop, text="Créer une règle").grid(row=2, column=3)
+        self.var = StringVar()
+        button_dir_path = Button(self.frametop, text='Cliquez pour choisir un fichier', command=self.get_file_path)
+        button_dir_path.grid(row=3, column=2)
 
 
         # Photo
         photo = PhotoImage(file="vicomte.gif")
-        label1 = Label(frametop, image=photo)
+        label1 = Label(self.frametop, image=photo)
         label1.image = photo
-        label1.pack()
+        label1.grid(row=3, column=10, sticky=W)
 
         ###############Frame du bas###################################
 
@@ -85,12 +90,9 @@ class Creer_Regle_Frame(Frame):
         self.choix_ext = Entry(framebot, width=5)
         self.choix_ext.grid(row=2, column=6)
 
+        # Création de la règle
         rename_button = Button(framebot, text='Créer règle', width=10, command=self.creer_regle)
         rename_button.grid(row=6, column=6)
-
-    def lister(self):
-        # fenetreLister.geometry("%dx%d%+d%+d" % (100, 400, 250, 200))
-        pass
 
 
     def quitter(self):
@@ -157,12 +159,13 @@ class Creer_Regle_Frame(Frame):
 
         liste_regle = ListeRegle()
         liste_regle.charger_liste_regle('NOMLOGICIEL.ini')
-
-        for r in liste_regle:
-            print('Element de la liste chargée: ' + r)
-
         liste_regle.append(regle)
-
-        for r in liste_regle:
-            print('Element de la liste à sauvegarder: ' + r)
         liste_regle.sauvegarder_liste_regle('NOMLOGICIEL.ini')
+
+        print(liste_regle)
+
+    def get_file_path(self):
+        self.var.set(tkinter.filedialog.askopenfilename())
+        print(self.var.get())
+        self.nomdurep = Label(self.frametop, text=self.var.get())
+        self.nomdurep.grid(row=3, column=3)

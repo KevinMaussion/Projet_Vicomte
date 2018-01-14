@@ -18,6 +18,9 @@ class ListeRegle(list):
 
     liste_regle = property(_get_liste_regle, _set_liste_regle)
 
+    def append(self, regle):
+        self._liste_regle.append(regle)
+
     def count(self, **kwargs):
         return len(self._get_liste_regle())
 
@@ -35,7 +38,5 @@ class ListeRegle(list):
         for e in self._get_liste_regle():
             yield e
 
-#Le résultat attendu n'est pas le bon. Tout les éléments ne sont pas affichés.
-    def __str__(self):
-        for regle in self._get_liste_regle():
-            return str(print(regle))
+    def __repr__(self):
+        return str(self._get_liste_regle())

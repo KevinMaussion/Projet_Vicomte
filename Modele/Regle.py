@@ -59,7 +59,7 @@ class Regle(object):
     postfixe = property(_get_postfixe, _set_postfixe)
     extension = property(_get_extension, _set_extension)
 
-    def __str__(self):
+    def __repr__(self):
         return "Règle: amorce = {}, à partir de = {}, prefixe = {}, nom de fichier = {}, postfixe = {}, extension = {}"\
             .format(self._get_amorce(), self._get_apartirde(), self._get_prefixe(),
                     self._get_nomfichier(), self._get_postfixe(), self._get_extension())

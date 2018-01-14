@@ -4,6 +4,7 @@ from tkinter import *
 from Modele.Regle import *
 from Modele.Renommage import *
 from Vue.Creer_Regle_Frame import Creer_Regle_Frame
+from Vue.Lister_Regle_Frame import Lister_Regle_Frame
 
 
 class Main_Frame(Frame):
@@ -122,8 +123,10 @@ class Main_Frame(Frame):
 
 
     def lister(self):
-        # fenetreLister.geometry("%dx%d%+d%+d" % (100, 400, 250, 200))
-        pass
+        root = Toplevel()
+        root.title("Lister les règles")
+        interface = Lister_Regle_Frame(root)
+        interface.mainloop()
 
     def software_information(self):
         root = Toplevel(width="500", height="500")
